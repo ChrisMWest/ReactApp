@@ -4,11 +4,12 @@ import axios from "axios";
 import SubmitForm from "./Components/SubmitForm";
 
 import Login from "./Components/Login";
+import Dashboard from './Components/Dashboard';
 
 function App() {
   return (
     <div>
-      <Login />
+      <Dashboard />
     </div>
   );
 }

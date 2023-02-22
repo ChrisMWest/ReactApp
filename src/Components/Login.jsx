@@ -16,13 +16,17 @@ export default function Login() {
         setName('');
         setPassword('');
         console.log("The name entered was: " + name + " and the password was: " + password);
-        axios.get('http://localhost:8080/test', {
+        axios.post('http://localhost:8080/test', {
             username: name,
             password: password
         })
         .then(function(response) {
             console.log(response.data)
-            navigate("/Home");
+            if(response.data == "0") {
+                console.log("that username already exists")
+            } else {
+                navigate("/Dashboard");
+            }
         })
         .catch(function(error) {
             console.log(error)
@@ -30,20 +34,28 @@ export default function Login() {
     }
 
     return (
-        <div>
+        <div class="container align-middle">
             <form onSubmit={handleSubmit}>
-            <div>
-            <label for="Name">Name: </label>
-            <input type="text" id="Name" name="Name" value={name} onChange={(e) => setName(e.target.value)}></input>
+            <div class="form-group row justify-content-center align-items-center">
+                <div class="col-xs-6">      
+                    <label class="form-label" for="Name">Name: </label>       
+                    <input type="text" id="Name" name="Name" class="form-control" value={name} onChange={(e) => setName(e.target.value)}></input>
+                    
+                </div>
             </div>
-            <div>
-            <label for="Password">Password: </label>
-            <input type="text" id="Password" name="Password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+            <div class="form-group row justify-content-center align-items-center">
+                <div class="col-xs-6">    
+                    <label class="form-label" for="Password">Password: </label>         
+                    <input type="text" id="Password" name="Password" class="form-control" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+                </div>
             </div>
-            <div>
-            <input type="submit"></input>
+            <div class="form-group row justify-content-center align-items-center">
+                <div class="col-xs-2">
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+                </div>
             </div>
-        </form>
+            </form>
+
         </div>
     )
 }

@@ -2,6 +2,29 @@ const express = require('express');
 const app = express();
 const port = 8080;
 const cors = require('cors');
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+
+
+const mysql = require("mysql")
+
+const connection = mysql.createConnection({
+    host: "127.0.0.1",
+    user: "root",
+    password: "root",
+    database: "react_app",
+    port: 3306
+})
+
+connection.connect((err) => {
+    if(err){
+        console.log("error connecting to database: " + err);
+        return;
+    } else {
+        console.log("Connection established");
+    }
+})
 
 
 
@@ -18,9 +41,62 @@ app.get('/', (req, res) => {
     res.send("HelloWorld");
 });
 
-app.get('/test', (req,res) => {
-    res.send("Test worked!")
+app.post('/test', (req,res) => {
+    let query = "insert into accounts(username, password) values (?, ?)";
+    let values = [req.body.username, req.body.password];
+
+    connection.query(query, values, (err, results, fields) => {
+        if(err) {
+            if(err.message.includes("ER_DUP_ENTRY")) {
+                res.send("0");
+            }
+            return console.error(err.message);
+        }
+        res.send("1");
+    })
 });
+
+app.post('/newMedia', (req ,res) => {
+    let query = "insert into media(MediaType, MediaName, MediaPriority) values (?, ?, ?)";
+    let values = [req.body.mediaType, req.body.mediaName, req.body.mediaPriority];
+
+    connection.query(query, values, (err, results, fields) => {
+        if(err) {
+            return console.error(err.message);
+        }
+        res.send("Success");
+        console.log("insertion was successful");
+    })
+
+})
+
+app.post("/deleteMedia", (req, res) => {
+    let query = "delete from media where MediaID=?"
+    let values = [req.body.mediaID];
+
+    connection.query(query, values, (err, results, fields) => {
+        if(err) {
+            return console.error(err.message);
+        }
+        res.send("deletion success");
+        console.log("deletion was successful");
+    })
+})
+
+app.get('/getMedia', (req ,res) => {
+    let query = "select MediaID as id, MediaType, MediaName, MediaPriority from media";
+
+    connection.query(query, (err, results) => {
+        if(err) {
+            return console.error(err.message);
+        }
+        res.send(results);
+    })
+
+})
+
+
+
 
 app.listen(port, () => {
     console.log("Example app listenting on port: " + port);
