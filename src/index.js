@@ -6,7 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  Link
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -15,6 +16,7 @@ import Login from "./Components/Login";
 
 import Settings from "./Components/Settings";
 import Dashboard from './Components/Dashboard';
+import SignUp from "./Components/SignUp";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -25,6 +27,7 @@ root.render(
             <Route exact path="/Dashboard" element={<Dashboard />} />
             <Route exact path="/Login" element={<Login />} />
             <Route exact path="/Settings" element={<Settings />} />
+            <Route exact path="/SignUp" element={<SignUp />} />
           </Routes>
         </Router>
   </React.StrictMode>

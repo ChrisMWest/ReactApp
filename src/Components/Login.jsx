@@ -1,30 +1,51 @@
 import React,{useState} from 'react';
 import './App.css';
 import axios from "axios";
-import SubmitForm from "./SubmitForm";
 import { useNavigate } from 'react-router-dom';
+import SignUp from './SignUp';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link
+  } from "react-router-dom";
+import Dashboard from './Dashboard';
 
 
 export default function Login() {
-  const navigate = useNavigate();
-  const [name, setName] = useState("");
+    const navigate = useNavigate();
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
 
+    const setDefaults = () => {
+        setName('');
+        setPassword('');
+    }
+
+    let isLoggedIn = false;
+
+    console.log("localStorageUsername: " + localStorage.getItem("username"))
+
+    if(localStorage.getItem("username") !== null) {
+        console.log("not null in login")
+        isLoggedIn = true;
+        navigate("/Dashboard");
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setName('');
-        setPassword('');
         console.log("The name entered was: " + name + " and the password was: " + password);
-        axios.post('http://localhost:8080/test', {
+        axios.post('http://localhost:8080/login', {
             username: name,
             password: password
         })
         .then(function(response) {
             console.log(response.data)
-            if(response.data == "0") {
-                console.log("that username already exists")
+            if(response.data == "Username or password is wrong.") {
+                console.log(response.data)
             } else {
+                localStorage.setItem("username", name);
+                setDefaults();
                 navigate("/Dashboard");
             }
         })
@@ -33,8 +54,8 @@ export default function Login() {
         });
     }
 
-    return (
-        <div class="container align-middle">
+    return ( 
+            <div class="container align-middle">
             <form onSubmit={handleSubmit}>
             <div class="form-group row justify-content-center align-items-center">
                 <div class="col-xs-6">      
@@ -55,7 +76,13 @@ export default function Login() {
                 </div>
             </div>
             </form>
-
-        </div>
+            <div class="justify-content-center align-items-center">
+                <div class="col-xs-2">
+                    <Link to="/SignUp">
+                        <button class="btn btn-primary btn-block mb-4">Go to Sign Up page.</button>
+                    </Link>
+                </div>
+            </div>
+            </div>
     )
 }

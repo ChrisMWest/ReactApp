@@ -1,20 +1,35 @@
 import React,{useState} from 'react';
 import './App.css';
-import axios from "axios";
-import SubmitForm from "./SubmitForm";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import { useNavigate } from 'react-router-dom';
 
 import Home from "./Home";
 import Settings from "./Settings";
 import Media from "./Media";
+import Login from "./Login";
 
 
 
 export default function Dashboard() {
+
+  const navigate = useNavigate();
+
+  let isLoggedIn=true;
+
+  if(localStorage.getItem("username") === null) {
+    console.log("null")
+    isLoggedIn = false;
+  }
+
+  const LoggedIn = () => {
+
+  }
+
   return (
-    <div>
-      <Tabs
+      <div>
+      {isLoggedIn ? 
+        <Tabs
         defaultActiveKey="Home"
         id="PageTabs"
         className="mb-6"
@@ -30,6 +45,8 @@ export default function Dashboard() {
           <Settings />
         </Tab>
       </Tabs>
-    </div>
+      : <Login />
+      } 
+    </div>   
   );
 }

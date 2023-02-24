@@ -41,18 +41,41 @@ app.get('/', (req, res) => {
     res.send("HelloWorld");
 });
 
-app.post('/test', (req,res) => {
-    let query = "insert into accounts(username, password) values (?, ?)";
+app.post('/signup', (req,res) => {
+    let insertQuery = "insert into accounts(username, password) values (?, ?)";
+    let checkQuery = "select * from accounts where username=?";
     let values = [req.body.username, req.body.password];
 
-    connection.query(query, values, (err, results, fields) => {
+    connection.query(checkQuery, values, (err, results, fields) => {
         if(err) {
-            if(err.message.includes("ER_DUP_ENTRY")) {
-                res.send("0");
-            }
             return console.error(err.message);
+        } else if(results.length == 0) {
+            connection.query(insertQuery, values, (err, results, fields) => {
+                if(err) {
+                    return console.error(err.message);
+                } 
+                res.send("Successful SignUp");
+            });
+        } else {
+            res.send("This username already exists");
         }
-        res.send("1");
+        console.log(results);
+        
+    })
+});
+
+app.post('/login', (req,res) => {
+    let checkQuery = "select * from accounts where username=? and password=?";
+    let values = [req.body.username, req.body.password];
+
+    connection.query(checkQuery, values, (err, results, fields) => {
+        if(err) {
+            return console.error(err.message);
+        } else if(results.length == 0){
+            res.send("Username or password is wrong.");
+        } else {
+            res.send("Login OK");
+        }
     })
 });
 
