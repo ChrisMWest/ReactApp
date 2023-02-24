@@ -3,11 +3,13 @@ import './App.css';
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { useNavigate } from 'react-router-dom';
+import { ProSidebarProvider } from 'react-pro-sidebar';
 
 import Home from "./Home";
 import Settings from "./Settings";
 import Media from "./Media";
 import Login from "./Login";
+import MySidebar from './MySidebar';
 
 
 
@@ -16,7 +18,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   let isLoggedIn=true;
-  
+
 
   if(localStorage.getItem("username") === null) {
     console.log("null")
@@ -24,8 +26,11 @@ export default function Dashboard() {
   }
 
   return (
-      <div>
-      {isLoggedIn ? 
+      <ProSidebarProvider>
+        <div class="container">
+      {isLoggedIn ?
+        <div class="row">      
+        <div class="col-sm-9">
         <Tabs
         defaultActiveKey="Home"
         id="PageTabs"
@@ -42,8 +47,16 @@ export default function Dashboard() {
           <Settings />
         </Tab>
       </Tabs>
+      </div>
+      <div class="col-sm-3 ">
+        <MySidebar />
+      </div>
+      </div>
       : <Login />
       } 
-    </div>   
+    
+    </div>
+    
+      </ProSidebarProvider>
   );
 }
