@@ -12,6 +12,7 @@ import {
 import Dashboard from './Dashboard';
 
 
+
 export default function Login() {
     const navigate = useNavigate();
     const [name, setName] = useState("");
@@ -29,7 +30,6 @@ export default function Login() {
     if(localStorage.getItem("username") !== null) {
         console.log("not null in login")
         isLoggedIn = true;
-        navigate("/Dashboard");
     }
 
     const handleSubmit = (e) => {
@@ -55,34 +55,41 @@ export default function Login() {
     }
 
     return ( 
-            <div class="container align-middle">
-            <form onSubmit={handleSubmit}>
-            <div class="form-group row justify-content-center align-items-center">
-                <div class="col-xs-6">      
-                    <label class="form-label" for="Name">Name: </label>       
-                    <input type="text" id="Name" name="Name" class="form-control" value={name} onChange={(e) => setName(e.target.value)}></input>
-                    
+            <div>
+                {!isLoggedIn ? 
+                <div class="container align-middle">
+                    <form onSubmit={handleSubmit}>
+                    <div class="form-group row justify-content-center align-items-center">
+                        <div class="col-xs-6">      
+                            <label class="form-label" for="Name">Name: </label>       
+                            <input type="text" id="Name" name="Name" class="form-control" value={name} onChange={(e) => setName(e.target.value)}></input>
+                            
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center align-items-center">
+                        <div class="col-xs-6">    
+                            <label class="form-label" for="Password">Password: </label>         
+                            <input type="text" id="Password" name="Password" class="form-control" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center align-items-center">
+                        <div class="col-xs-2">
+                            <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+                        </div>
+                    </div>
+                    </form>
+                    <div class="justify-content-center align-items-center">
+                        <div class="col-xs-2">
+                            <Link to="/SignUp">
+                                <button class="btn btn-primary btn-block mb-4">Go to Sign Up page.</button>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
+                : <Dashboard />
+                }
             </div>
-            <div class="form-group row justify-content-center align-items-center">
-                <div class="col-xs-6">    
-                    <label class="form-label" for="Password">Password: </label>         
-                    <input type="text" id="Password" name="Password" class="form-control" value={password} onChange={(e) => setPassword(e.target.value)}></input>
-                </div>
-            </div>
-            <div class="form-group row justify-content-center align-items-center">
-                <div class="col-xs-2">
-                    <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
-                </div>
-            </div>
-            </form>
-            <div class="justify-content-center align-items-center">
-                <div class="col-xs-2">
-                    <Link to="/SignUp">
-                        <button class="btn btn-primary btn-block mb-4">Go to Sign Up page.</button>
-                    </Link>
-                </div>
-            </div>
-            </div>
+            
+
     )
 }

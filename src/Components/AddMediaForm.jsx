@@ -20,7 +20,8 @@ export default function AddMedia({onSubmit, tableRefresh}) {
         axios.post('http://localhost:8080/newMedia', {
             mediaType: mediaType,
             mediaName: mediaName,
-            mediaPriority: mediaPriority
+            mediaPriority: mediaPriority,
+            username: localStorage.getItem("username")
         }) 
         .then((response) => {
             setDefaults();

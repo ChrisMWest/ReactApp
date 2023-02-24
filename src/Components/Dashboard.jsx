@@ -16,14 +16,11 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   let isLoggedIn=true;
+  
 
   if(localStorage.getItem("username") === null) {
     console.log("null")
     isLoggedIn = false;
-  }
-
-  const LoggedIn = () => {
-
   }
 
   return (

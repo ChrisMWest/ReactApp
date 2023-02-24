@@ -5,7 +5,7 @@ import { FormControlLabel, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Table from "./Table";
 import AddMediaForm from './AddMediaForm';
-
+import Logout from "./Logout";
 
 /**Add another file called addmedia */
 export default function Media() {
@@ -18,13 +18,18 @@ export default function Media() {
         setTableRefresh(!tableRefresh);
     }
 
+    console.log(localStorage.getItem("username"))
+
     useEffect(() => {
 
         const getData = () => {
             axios.get('http://localhost:8080/getMedia', {
-
+                params: {
+                    username: localStorage.getItem("username")
+                }
             })
             .then((response) => {
+                console.log(response.data);
                 setTableData(response.data);
             })
             .catch((error) => {
@@ -46,6 +51,7 @@ export default function Media() {
                 console.log(arg)
                 setRefresh();
             }} />
+            <Logout />
         </div>
     );
 }

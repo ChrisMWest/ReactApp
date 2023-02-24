@@ -2,7 +2,12 @@ import React,{useState} from 'react';
 import './App.css';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link
+  } from "react-router-dom";
 
 
 export default function SignUp() {
@@ -60,6 +65,13 @@ export default function SignUp() {
                 </div>
             </div>
             </form>
+            <div class="justify-content-center align-items-center">
+                <div class="col-xs-2">
+                    <Link to="/Login">
+                        <button class="btn btn-primary btn-block mb-4">Go to Login page.</button>
+                    </Link>
+                </div>
+            </div>
 
         </div>
     )

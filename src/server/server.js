@@ -35,6 +35,7 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 
+app.use(bodyParser.json());
 
 
 app.get('/', (req, res) => {
@@ -54,10 +55,10 @@ app.post('/signup', (req,res) => {
                 if(err) {
                     return console.error(err.message);
                 } 
-                res.send("Successful SignUp");
+                res.send("Successful SignUp.");
             });
         } else {
-            res.send("This username already exists");
+            res.send("This username already exists.");
         }
         console.log(results);
         
@@ -74,14 +75,14 @@ app.post('/login', (req,res) => {
         } else if(results.length == 0){
             res.send("Username or password is wrong.");
         } else {
-            res.send("Login OK");
+            res.send("Login OK.");
         }
     })
 });
 
 app.post('/newMedia', (req ,res) => {
-    let query = "insert into media(MediaType, MediaName, MediaPriority) values (?, ?, ?)";
-    let values = [req.body.mediaType, req.body.mediaName, req.body.mediaPriority];
+    let query = "insert into media(MediaType, MediaName, MediaPriority, MediaOwner) values (?, ?, ?, ?)";
+    let values = [req.body.mediaType, req.body.mediaName, req.body.mediaPriority, req.body.username];
 
     connection.query(query, values, (err, results, fields) => {
         if(err) {
@@ -107,12 +108,14 @@ app.post("/deleteMedia", (req, res) => {
 })
 
 app.get('/getMedia', (req ,res) => {
-    let query = "select MediaID as id, MediaType, MediaName, MediaPriority from media";
+    let query = "select MediaID as id, MediaType, MediaName, MediaPriority from media where MediaOwner=?";
+    let values = [req.query.username];
 
-    connection.query(query, (err, results) => {
+    connection.query(query, values, (err, results, fields) => {
         if(err) {
             return console.error(err.message);
         }
+        console.log(results);
         res.send(results);
     })
 
