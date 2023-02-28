@@ -41,17 +41,23 @@ export default function Media() {
 
     return (
         
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <AddMediaForm onSubmit={(arg) => {
-                console.log(arg)
-                setRefresh();
-            }} tableRefresh={tableRefresh} />
-            <Table data={tableData} tableRefresh={tableRefresh}
-             onSubmit = {(arg) => {
-                console.log(arg)
-                setRefresh();
-            }} />
-            <Logout />
+        <div class="h-100 d-flex align-items-center justify-content-center container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <AddMediaForm onSubmit={(arg) => {
+                        console.log(arg)
+                        setRefresh();
+                    }} tableRefresh={tableRefresh} />
+                </div>
+                <div class="col-sm-5">
+                    <Table data={tableData} tableRefresh={tableRefresh}
+                        onSubmit = {(arg) => {
+                        console.log(arg)
+                    setRefresh();
+                    }} />
+                </div>
+            </div>
         </div>
+            
     );
 }

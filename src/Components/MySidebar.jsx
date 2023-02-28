@@ -10,9 +10,8 @@ export default function MySidebar() {
         <div class="align-items-right justify-content-right" >
         <Sidebar>
           <Menu>
-            <MenuItem> Documentation</MenuItem>
-            <MenuItem> Calendar</MenuItem>
-            <MenuItem> E-commerce</MenuItem>
+            <MenuItem> Users</MenuItem>
+            <MenuItem> Friends</MenuItem>
           </Menu>
         </Sidebar>
         <main>

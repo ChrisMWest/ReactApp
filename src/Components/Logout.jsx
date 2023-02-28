@@ -20,7 +20,7 @@ export default function Logout() {
 
     return (
         <div>
-            <button onClick={userLogout} class="btn btn-primary btn-block mb-4">Logout</button>
+            <button onClick={userLogout} class="btn btn-primary btn-block mb-4 align-items-center justify-content-center">Logout</button>
         </div>
     )
 }

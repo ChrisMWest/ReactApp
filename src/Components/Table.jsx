@@ -40,7 +40,7 @@ export default function NewTable({data, tableRefresh, onSubmit}) {
         width: 150,
         renderCell: (params) => {
             return (
-                <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+                <div style={{ cursor: "pointer" }}>
                                     <DeleteRow index={params.row.id} />
                                  </div>
             )

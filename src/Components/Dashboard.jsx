@@ -10,6 +10,7 @@ import Settings from "./Settings";
 import Media from "./Media";
 import Login from "./Login";
 import MySidebar from './MySidebar';
+import Logout from './Logout';
 
 
 
@@ -30,7 +31,7 @@ export default function Dashboard() {
         <div class="container">
       {isLoggedIn ?
         <div class="row">      
-        <div class="col-sm-9">
+        <div class="col-sm-10">
         <Tabs
         defaultActiveKey="Home"
         id="PageTabs"
@@ -48,13 +49,15 @@ export default function Dashboard() {
         </Tab>
       </Tabs>
       </div>
-      <div class="col-sm-3 ">
+      <div class="col-sm-2 ">
         <MySidebar />
       </div>
       </div>
       : <Login />
       } 
-    
+    <div class="row">
+      <Logout />
+    </div>
     </div>
     
       </ProSidebarProvider>
