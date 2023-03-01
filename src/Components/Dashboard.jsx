@@ -28,7 +28,7 @@ export default function Dashboard() {
 
   return (
       <ProSidebarProvider>
-        <div class="container">
+        <div class="container-fluid">
       {isLoggedIn ?
         <div class="row">      
         <div class="col-sm-10">

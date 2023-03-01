@@ -8,6 +8,7 @@ import {
     Route,
     Link
   } from "react-router-dom";
+import MySidebar from './MySidebar';
 
 
 export default function SignUp() {

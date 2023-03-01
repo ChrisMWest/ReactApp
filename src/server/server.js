@@ -121,6 +121,19 @@ app.get('/getMedia', (req ,res) => {
 
 })
 
+app.get('/getUsers', (req ,res) => {
+    let query = "select username from accounts";
+
+    connection.query(query, (err, results, fields) => {
+        if(err) {
+            return console.error(err.message);
+        }
+        console.log(results);
+        res.send(results);
+    })
+
+})
+
 
 
 
