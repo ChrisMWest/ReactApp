@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import './App.css';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { MenuItem } from 'react-pro-sidebar';
 
 import {
     BrowserRouter as Router,
@@ -19,8 +20,6 @@ export default function Logout() {
     }
 
     return (
-        <div>
-            <button onClick={userLogout} class="btn btn-primary btn-block mb-4 align-items-center justify-content-center">Logout</button>
-        </div>
+        <MenuItem onClick={userLogout}>Logout</MenuItem>
     )
 }

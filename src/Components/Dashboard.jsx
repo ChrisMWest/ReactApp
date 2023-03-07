@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import './App.css';
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 import { ProSidebarProvider } from 'react-pro-sidebar';
 
 import Home from "./Home";
@@ -20,6 +20,12 @@ export default function Dashboard() {
 
   let isLoggedIn=true;
 
+  const [collapsed, setCollapsed] = useState(false);
+  const [currentPage, setCurrentPage] = useState(<Home />);
+
+  const PageContent = (page) => {
+    return currentPage;
+  }
 
   if(localStorage.getItem("username") === null) {
     console.log("null")
@@ -28,36 +34,25 @@ export default function Dashboard() {
 
   return (
       <ProSidebarProvider>
-        <div class="container-fluid">
+        <div class="container-fluid" style={({ height: "100vh" })}>
       {isLoggedIn ?
-        <div class="row">      
-        <div class="col-sm-10">
-        <Tabs
-        defaultActiveKey="Home"
-        id="PageTabs"
-        className="mb-6"
-        justify
-      >
-        <Tab eventKey="Home" title="Home">
-          <Home />
-        </Tab>
-        <Tab eventKey="Media" title="Media">
-          <Media />
-        </Tab>
-        <Tab eventKey="Settings" title="Settings">
-          <Settings />
-        </Tab>
-      </Tabs>
-      </div>
-      <div class="col-sm-2 ">
-        <MySidebar />
+        
+        <div class="row">
+        <div class={collapsed ? "col-sm-1 " : "col-sm-3"}>
+          <MySidebar 
+            onCollapse={(arg) => {
+              setCollapsed(!arg);
+            }}
+            onPageChange={(arg) => {
+              setCurrentPage(arg);
+            }}/>
+        </div>   
+        <div class={collapsed ? "col-sm-11" : "col-sm-9"}>
+            <PageContent page={currentPage} />
       </div>
       </div>
       : <Login />
       } 
-    <div class="row">
-      <Logout />
-    </div>
     </div>
     
       </ProSidebarProvider>

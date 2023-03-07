@@ -32,7 +32,7 @@ export default function MessagingModal({recipient, showModal, onClose}) {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary">Understood</Button>
+                    <Button variant="primary">Send</Button>
                 </Modal.Footer>
             </Modal>
         </div>
