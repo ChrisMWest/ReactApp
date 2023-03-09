@@ -53,7 +53,7 @@ export default function Media() {
                     <Table data={tableData} tableRefresh={tableRefresh}
                         onSubmit = {(arg) => {
                         console.log(arg)
-                    setRefresh();
+                        setRefresh();
                     }} />
                 </div>
             </div>

@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import './App.css';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { MenuItem } from 'react-pro-sidebar';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import {
     BrowserRouter as Router,
@@ -20,6 +21,6 @@ export default function Logout() {
     }
 
     return (
-        <MenuItem onClick={userLogout}>Logout</MenuItem>
+        <MenuItem icon={<LogoutIcon />} onClick={userLogout}>Logout</MenuItem>
     )
 }

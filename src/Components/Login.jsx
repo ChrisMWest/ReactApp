@@ -17,19 +17,16 @@ export default function Login() {
     const navigate = useNavigate();
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const setDefaults = () => {
         setName('');
         setPassword('');
     }
 
-    let isLoggedIn = false;
-
-    console.log("localStorageUsername: " + localStorage.getItem("username"))
-
     if(localStorage.getItem("username") !== null) {
         console.log("not null in login")
-        isLoggedIn = true;
+        setIsLoggedIn(true);
     }
 
     const handleSubmit = (e) => {
