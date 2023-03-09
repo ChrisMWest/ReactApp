@@ -25,6 +25,7 @@ export default function MySidebar({onCollapse, onPageChange}) {
     const [friends, setFriends] = useState([]);
     const [recipient, setRecipient] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [userRefresh, setUserRefresh] = useState(false);
 
     const displayUsers = () => {
       console.log("users clicked");
@@ -62,7 +63,7 @@ export default function MySidebar({onCollapse, onPageChange}) {
           })
       }
       getFriendData();
-  }, []);
+  }, [userRefresh]);
 
   const handleAddFriend = (username) => {
 
@@ -111,10 +112,11 @@ export default function MySidebar({onCollapse, onPageChange}) {
               icon={<PeopleOutlinedIcon />}
             >
               {users.map((user) => 
-                {if(user.username !== localStorage.getItem("username")) {
+                {if(user.username !== localStorage.getItem("username") && !friends.some(el => el.username === user.username)) {
                   return <MenuItem 
                   suffix={<AddIcon onClick={() => {
                     handleAddFriend(user.username);
+                    setUserRefresh(!userRefresh);
                     console.log("friend one: " + localStorage.getItem("username") + " added friend two: " + user.username);
                   }}/>}
                 >{user.username}</MenuItem>
@@ -130,6 +132,7 @@ export default function MySidebar({onCollapse, onPageChange}) {
                   return <MenuItem 
                   suffix={<MessageIcon onClick={() => {
                     console.log("suffix clicked");
+                    console.log(friends.includes(friend));
                     console.log("clicked with user: " + friend.username)
                     setRecipient(friend.username);
                     setShowModal(!showModal);
