@@ -25,7 +25,7 @@ export default function MySidebar({onCollapse, onPageChange}) {
     const [friends, setFriends] = useState([]);
     const [recipient, setRecipient] = useState("");
     const [showModal, setShowModal] = useState(false);
-    const [userRefresh, setUserRefresh] = useState(false);
+    const [userRefresh, setUserRefresh] = useState(true);
 
     const displayUsers = () => {
       console.log("users clicked");

@@ -38,16 +38,23 @@ export default function ViewUserPage({username}) {
 
 
     return (
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="align-items-center justify-content-center" style={{ height: 500, width: '700px' }}>
-                <DataGrid
-                    rows={tableData}
-                    columns={columns}
-                    pageSize={10}
-                    rowsPerPageOptions={[4]}
-                />
+        <div class="h-50 container">
+            <div class="h-50 row justify-content-center align-items-center">
+                Welcome to {username}'s media page!
             </div>
-
+            <div class="row justify-content-center align-items-center">
+                <div class="align-items-center justify-content-center" style={{ height: 500, width: '700px' }}>
+                    <DataGrid
+                        rows={tableData}
+                        columns={columns}
+                        pageSize={10}
+                        rowsPerPageOptions={[4]}
+                    />
+                </div>
+            </div>
         </div>
+            
+            
+
     )
 }
