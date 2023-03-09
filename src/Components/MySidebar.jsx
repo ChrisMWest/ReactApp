@@ -9,6 +9,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import MessageIcon from '@mui/icons-material/Message';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import AddIcon from '@mui/icons-material/Add';
 import MessagingModal from './MessagingModal';
 import {Link} from "react-router-dom";
 import Home from "./Home";
@@ -21,6 +22,7 @@ export default function MySidebar({onCollapse, onPageChange}) {
 
     const {collapseSidebar, rtl} = useProSidebar();
     const [users, setUsers] = useState([]);
+    const [friends, setFriends] = useState([]);
     const [recipient, setRecipient] = useState("");
     const [showModal, setShowModal] = useState(false);
 
@@ -32,7 +34,7 @@ export default function MySidebar({onCollapse, onPageChange}) {
 
     useEffect(() => {
 
-      const getData = () => {
+      const getUserData = () => {
           axios.get('http://localhost:8080/getUsers', {
           })
           .then((response) => {
@@ -43,8 +45,39 @@ export default function MySidebar({onCollapse, onPageChange}) {
               console.log(error);
           })
       }
-      getData();
+      getUserData();
+
+      const getFriendData = () => {
+        axios.get('http://localhost:8080/getFriends', {
+          params: {
+            username: localStorage.getItem("username")
+          }
+          })
+          .then((response) => {
+              console.log(response.data);
+              setFriends(response.data);
+          })
+          .catch((error) => {
+              console.log(error);
+          })
+      }
+      getFriendData();
   }, []);
+
+  const handleAddFriend = (username) => {
+
+    axios.post('http://localhost:8080/newFriendship', {
+        username: localStorage.getItem("username"),
+        recipient: username
+    }) 
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+    
+}
 
     return (
         <div>
@@ -80,24 +113,36 @@ export default function MySidebar({onCollapse, onPageChange}) {
               {users.map((user) => 
                 {if(user.username !== localStorage.getItem("username")) {
                   return <MenuItem 
+                  suffix={<AddIcon onClick={() => {
+                    handleAddFriend(user.username);
+                    console.log("friend one: " + localStorage.getItem("username") + " added friend two: " + user.username);
+                  }}/>}
+                >{user.username}</MenuItem>
+                }})}
+                
+            </SubMenu>
+            <SubMenu
+              label="Friends"
+              title={"Friends"}
+              icon={<ContactsOutlinedIcon />}>
+                {friends.map((friend) => 
+                {if(friend.username !== localStorage.getItem("username")) {
+                  return <MenuItem 
                   suffix={<MessageIcon onClick={() => {
                     console.log("suffix clicked");
-                    console.log("clicked with user: " + user.username)
-                    setRecipient(user.username);
+                    console.log("clicked with user: " + friend.username)
+                    setRecipient(friend.username);
                     setShowModal(!showModal);
                     console.log(showModal);
                     console.log(recipient)
                   }}/>}
                   icon={<PeopleOutlinedIcon onClick={() => {
                     console.log("Clicked to go to user page")
-                    onPageChange(<ViewUserPage username={user.username} />);
+                    onPageChange(<ViewUserPage username={friend.username} />);
                   }}/>}
-                >{user.username}</MenuItem>
+                >{friend.username}</MenuItem>
                 }})}
-                
             </SubMenu>
-            <MenuItem
-              icon={<ContactsOutlinedIcon />}> Friends</MenuItem>
             <Logout />
           </Menu>
         </Sidebar>

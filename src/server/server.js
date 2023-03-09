@@ -14,7 +14,8 @@ const connection = mysql.createConnection({
     user: "root",
     password: "root",
     database: "react_app",
-    port: 3306
+    port: 3306,
+    multipleStatements: true
 })
 
 connection.connect((err) => {
@@ -130,6 +131,35 @@ app.get('/getUsers', (req ,res) => {
         }
         console.log(results);
         res.send(results);
+    })
+
+})
+
+app.get("/getFriends", (req, res) => {
+    let query = "select FriendTwo as username from friends where FriendOne=?";
+    let values = [req.query.username];
+
+    console.log(values);
+
+    connection.query(query, values, (err, results, fields) => {
+        if(err) {
+            return console.error(err.message);
+        }
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.post('/newFriendship', (req ,res) => {
+    let query = "insert into friends(FriendOne, FriendTwo) values (?, ?); insert into friends(FriendTwo, FriendOne) values (?, ?);";
+    let values = [req.body.username, req.body.recipient, req.body.username, req.body.recipient];
+
+    connection.query(query, values, (err, results, fields) => {
+        if(err) {
+            return console.error(err.message);
+        }
+        res.send("Success");
+        console.log("insertion was successful");
     })
 
 })
