@@ -15,6 +15,7 @@ import Home from "./Home";
 import Settings from './Settings';
 import Media from './Media';
 import Logout from './Logout';
+import ViewUserPage from './ViewUserPage';
 
 export default function MySidebar({onCollapse, onPageChange}) {
 
@@ -89,6 +90,7 @@ export default function MySidebar({onCollapse, onPageChange}) {
                   }}/>}
                   icon={<PeopleOutlinedIcon onClick={() => {
                     console.log("Clicked to go to user page")
+                    onPageChange(<ViewUserPage username={user.username} />);
                   }}/>}
                 >{user.username}</MenuItem>
                 }})}

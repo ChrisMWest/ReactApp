@@ -18,10 +18,9 @@ export default function Dashboard() {
 
   const navigate = useNavigate();
 
-  let isLoggedIn=true;
-
   const [collapsed, setCollapsed] = useState(false);
   const [currentPage, setCurrentPage] = useState(<Home />);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const PageContent = (page) => {
     return currentPage;
@@ -29,7 +28,7 @@ export default function Dashboard() {
 
   if(localStorage.getItem("username") === null) {
     console.log("null")
-    isLoggedIn = false;
+    setIsLoggedIn(false);
   }
 
   return (
