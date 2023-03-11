@@ -9,6 +9,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import MessageIcon from '@mui/icons-material/Message';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import MessagingModal from './MessagingModal';
 import {Link} from "react-router-dom";
@@ -80,6 +81,20 @@ export default function MySidebar({onCollapse, onPageChange}) {
     
 }
 
+  const handleDeleteFriend = (username) => {
+    
+    axios.post('http://localhost:8080/deleteFriendship', {
+        username: localStorage.getItem("username"),
+        recipient: username
+    }) 
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+  }
+
     return (
         <div>
         <Sidebar style={({height: "100vh"})}>
@@ -130,7 +145,8 @@ export default function MySidebar({onCollapse, onPageChange}) {
                 {friends.map((friend) => 
                 {if(friend.username !== localStorage.getItem("username")) {
                   return <MenuItem 
-                  suffix={<MessageIcon onClick={() => {
+                  suffix={<div>
+                      <MessageIcon onClick={() => {
                     console.log("suffix clicked");
                     console.log(friends.includes(friend));
                     console.log("clicked with user: " + friend.username)
@@ -138,7 +154,12 @@ export default function MySidebar({onCollapse, onPageChange}) {
                     setShowModal(!showModal);
                     console.log(showModal);
                     console.log(recipient)
-                  }}/>}
+                  }}/>
+                  <DeleteIcon onClick={() => {
+                    handleDeleteFriend(friend.username);
+                    setUserRefresh(!userRefresh);
+                }} />
+                    </div>}
                   icon={<PeopleOutlinedIcon onClick={() => {
                     console.log("Clicked to go to user page")
                     onPageChange(<ViewUserPage username={friend.username} />);
