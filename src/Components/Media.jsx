@@ -41,21 +41,20 @@ export default function Media() {
 
     return (
         
-        <div class="h-100 d-flex align-items-center justify-content-center container">
-            <div class="row">
-                <div class="col-sm-3">
+        <div class="h-50 container">
+            <div class="h-75 row justify-content-center align-items-center">
                     <AddMediaForm onSubmit={(arg) => {
                         console.log(arg)
                         setRefresh();
                     }} tableRefresh={tableRefresh} />
-                </div>
-                <div class="col-sm-5">
+                
+            </div>
+            <div class="row justify-content-center align-items-center">
                     <Table data={tableData} tableRefresh={tableRefresh}
                         onSubmit = {(arg) => {
                         console.log(arg)
                         setRefresh();
                     }} />
-                </div>
             </div>
         </div>
             
