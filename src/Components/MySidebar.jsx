@@ -19,7 +19,7 @@ import Media from './Media';
 import Logout from './Logout';
 import ViewUserPage from './ViewUserPage';
 
-export default function MySidebar({onCollapse, onPageChange}) {
+export default function MySidebar({onCollapse, onPageChange, socket}) {
 
     const {collapseSidebar, rtl} = useProSidebar();
     const [users, setUsers] = useState([]);
@@ -167,7 +167,7 @@ export default function MySidebar({onCollapse, onPageChange}) {
                 >{friend.username}</MenuItem>
                 }})}
             </SubMenu>
-            <Logout />
+            <Logout socket={socket}/>
           </Menu>
         </Sidebar>
         {showModal ? 

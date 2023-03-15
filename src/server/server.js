@@ -2,9 +2,25 @@ const express = require('express');
 const app = express();
 const port = 8080;
 const cors = require('cors');
+const http = require('http').Server(app);
+const io = require('socket.io')(http, {
+    cors: {
+        origin: "http://localhost:3000"
+    }
+})
+
+io.on("connection", (socket) => {
+    console.log("socket: " + socket.id + " has connected");
+    socket.on("disconnect", () => {
+        console.log(socket.id + " disconnected");
+    })
+})
+
 const bodyParser = require("body-parser");
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
+
 
 
 const mysql = require("mysql")
@@ -61,7 +77,7 @@ app.post('/signup', (req,res) => {
         } else {
             res.send("This username already exists.");
         }
-        console.log(results);
+        //console.log(results);
         
     })
 });
@@ -116,7 +132,7 @@ app.get('/getMedia', (req ,res) => {
         if(err) {
             return console.error(err.message);
         }
-        console.log(results);
+        //console.log(results);
         res.send(results);
     })
 
@@ -129,7 +145,7 @@ app.get('/getUsers', (req ,res) => {
         if(err) {
             return console.error(err.message);
         }
-        console.log(results);
+        //console.log(results);
         res.send(results);
     })
 
@@ -139,13 +155,13 @@ app.get("/getFriends", (req, res) => {
     let query = "select FriendTwo as username from friends where FriendOne=?";
     let values = [req.query.username];
 
-    console.log(values);
+    //console.log(values);
 
     connection.query(query, values, (err, results, fields) => {
         if(err) {
             return console.error(err.message);
         }
-        console.log(results);
+        //console.log(results);
         res.send(results);
     })
 })
@@ -164,9 +180,23 @@ app.post('/newFriendship', (req ,res) => {
 
 })
 
+app.post('/deleteFriendship', (req ,res) => {
+    let query = "delete from friends where (FriendOne=? and FriendTwo=?) or (FriendTwo=? and FriendOne=?);";
+    let values = [req.body.username, req.body.recipient, req.body.username, req.body.recipient];
+
+    connection.query(query, values, (err, results, fields) => {
+        if(err) {
+            return console.error(err.message);
+        }
+        res.send("Success");
+        console.log("insertion was successful");
+    })
+
+})
 
 
 
-app.listen(port, () => {
+
+http.listen(port, () => {
     console.log("Example app listenting on port: " + port);
 })

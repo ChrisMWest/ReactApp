@@ -11,12 +11,13 @@ import {
     Link
   } from "react-router-dom";
 
-export default function Logout() {
+export default function Logout({socket}) {
 
     const navigate = useNavigate();
 
     const userLogout = () => {
         localStorage.removeItem("username");
+        socket.disconnect();
         navigate("/Login");
     }
 

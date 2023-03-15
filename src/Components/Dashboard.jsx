@@ -4,6 +4,7 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import { ProSidebarProvider } from 'react-pro-sidebar';
+import { io } from 'socket.io-client';
 
 import Home from "./Home";
 import Settings from "./Settings";
@@ -12,10 +13,15 @@ import Login from "./Login";
 import MySidebar from './MySidebar';
 import Logout from './Logout';
 
+const socket = io("http://localhost:8080", {
+    autoConnect: false
+});
 
 
 export default function Dashboard() {
 
+
+  socket.connect();
   const navigate = useNavigate();
 
   const [collapsed, setCollapsed] = useState(false);
@@ -44,7 +50,8 @@ export default function Dashboard() {
             }}
             onPageChange={(arg) => {
               setCurrentPage(arg);
-            }}/>
+            }}
+            socket={socket}/>
         </div>   
         <div class={collapsed ? "col-sm-11" : "col-sm-9"}>
             <PageContent page={currentPage} />

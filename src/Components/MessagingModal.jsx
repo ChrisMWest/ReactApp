@@ -12,7 +12,6 @@ export default function MessagingModal({recipient, showModal, onClose}) {
         setDisplayModal(false);
         onClose(!showModal);
     }
-    const handleShow = () => setDisplayModal(true);
 
     return (
         <div class="justify-content-center align-items-center">

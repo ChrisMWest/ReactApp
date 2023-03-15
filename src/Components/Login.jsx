@@ -2,7 +2,6 @@ import React,{useState} from 'react';
 import './App.css';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import SignUp from './SignUp';
 import {
     BrowserRouter as Router,
     Routes,
@@ -10,7 +9,6 @@ import {
     Link
   } from "react-router-dom";
 import Dashboard from './Dashboard';
-
 
 
 export default function Login() {
@@ -23,6 +21,7 @@ export default function Login() {
         setName('');
         setPassword('');
     }
+
 
     if(localStorage.getItem("username") !== null) {
         console.log("not null in login")
