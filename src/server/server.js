@@ -3,17 +3,39 @@ const app = express();
 const port = 8080;
 const cors = require('cors');
 const http = require('http').Server(app);
+
 const io = require('socket.io')(http, {
     cors: {
         origin: "http://localhost:3000"
     }
 })
 
+const users = {};
+
 io.on("connection", (socket) => {
     console.log("socket: " + socket.id + " has connected");
     socket.on("disconnect", () => {
         console.log(socket.id + " disconnected");
+        console.log(users)
+        delete users[socket.id];
     })
+    socket.on("user-connection", (args) => {
+        console.log(args);
+        users[socket.id] = args;
+        console.log(users)
+    })
+
+    socket.on("message-to-user", (...args) => {
+        console.log(args[0]);
+        io.emit("everyone-message", "message sent to everyone")
+        let key = Object.keys(users).find(key => users[key] === args[0]);
+        console.log(key)
+        if(key !== undefined) {
+            console.log("entered")
+            io.to(key).emit("private-message", "hello from " + socket.id, socket.id);
+        }
+        //io.to(args[0]).emit("hello, " + args[0]);
+    });
 })
 
 const bodyParser = require("body-parser");

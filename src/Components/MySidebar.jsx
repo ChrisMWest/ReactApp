@@ -32,6 +32,7 @@ export default function MySidebar({onCollapse, onPageChange, socket}) {
       console.log("users clicked");
     }
 
+
     const [collapsed, setCollapsed] = useState(false);
 
     useEffect(() => {
@@ -171,7 +172,7 @@ export default function MySidebar({onCollapse, onPageChange, socket}) {
           </Menu>
         </Sidebar>
         {showModal ? 
-          <MessagingModal recipient={recipient} showModal={showModal} 
+          <MessagingModal recipient={recipient} showModal={showModal} socket={socket} 
             onClose={(arg) => {
               setShowModal(arg)
             }}/> : <br></br>} 

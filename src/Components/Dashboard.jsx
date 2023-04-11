@@ -19,9 +19,17 @@ const socket = io("http://localhost:8080", {
 
 
 export default function Dashboard() {
-
-
   socket.connect();
+  socket.emit("user-connection", localStorage.getItem("username"));
+  const [socketID, setSocketID] = useState(socket.id)
+  
+
+  socket.on("everyone-message", (arg) => {
+    console.log(arg)
+  })
+
+  
+
   const navigate = useNavigate();
 
   const [collapsed, setCollapsed] = useState(false);

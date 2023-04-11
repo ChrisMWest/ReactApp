@@ -12,6 +12,8 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
+
+
 import Login from "./Components/Login";
 
 import Settings from "./Components/Settings";
@@ -32,6 +34,7 @@ root.render(
             <Route exact path="/SignUp" element={<SignUp />} />
             <Route exact path="/Home" element={<Home />} />
             <Route exact path="/Media" element={<Media/>} />
+            
           </Routes>
         </Router>
   </React.StrictMode>

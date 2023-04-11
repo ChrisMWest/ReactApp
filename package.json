@@ -25,6 +25,9 @@
     "react-scripts": "^2.1.3",
     "react-select": "^5.7.0",
     "react-table": "^7.8.0",
+    "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1",
+    "socket.io-react-hook": "^2.4.0",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },

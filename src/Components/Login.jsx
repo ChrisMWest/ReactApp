@@ -9,7 +9,10 @@ import {
     Link
   } from "react-router-dom";
 import Dashboard from './Dashboard';
-
+import { io } from 'socket.io-client';
+const socket = io("http://localhost:8080", {
+    autoConnect: false
+});
 
 export default function Login() {
     const navigate = useNavigate();
